@@ -10,12 +10,17 @@
   ],
   "license": "MIT",
   "homepage": "http://mgachowski.pl",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
+  ],
+  "keywords": [
+    "carpet",
+    "modules",
+    "framework",
+    "dom"
   ]
 }
