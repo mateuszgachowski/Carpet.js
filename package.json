@@ -2,7 +2,6 @@
   "name": "carpet",
   "description": "Carpet.js - simple web-module JavaScript framework",
   "version": "2.0.0",
-  "private": true,
   "homepage": "http://mgachowski.pl",
   "author": "Mateusz Gachowski <mateusz.gachowski@gmail.com>",
   "license": {
