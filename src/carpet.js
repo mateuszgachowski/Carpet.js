@@ -220,9 +220,9 @@
           domModule = DOMModules[moduleIndex];
           moduleName = domModule.getAttribute('data-module');
 
-          /* jshint ignore:start */
+          /*jshint -W054 */
           moduleSettings = new Function ('return ' + domModule.getAttribute('data-settings'))() || {};
-          /* jshint ignore:end */
+          /*jshint +W054 */
 
           currentModule = carpetModules[moduleName];
 
