@@ -45,14 +45,154 @@
 
 <p>project icon: Rug by Factorio.us collective from The Noun Project</p>
 
+<p>Master: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master" alt="Build Status"></a> Develop: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop" alt="Build Status"></a></p>
+
+<h1>
+<a id="framework-usage" class="anchor" href="#framework-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Framework Usage</h1>
+
 <h2>
-<a id="compiling-the-framework" class="anchor" href="#compiling-the-framework" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling the framework</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>bower install carpet
+</code></pre>
+
+<p>or download the compressed file <a href="https://github.com/mateuszgachowski/Carpet.js/blob/master/dist/carpet.min.js">from here</a></p>
+
+<h2>
+<a id="minimal-application" class="anchor" href="#minimal-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Minimal application</h2>
+
+<p>Minimal application will not do anything until you define some modules.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-html"><pre>&lt;!doctype html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+  &lt;<span class="pl-ent">head</span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-eoa">charset</span>=<span class="pl-s1"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">title</span>&gt;Carpet.js - Sample usage&lt;/<span class="pl-ent">title</span>&gt;
+  &lt;/<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">body</span>&gt;
+    <span class="pl-c"><span class="pl-pdc">&lt;!--</span> your code here <span class="pl-pdc">--&gt;</span></span>
+<span class="pl-s2">    &lt;<span class="pl-ent">script</span> <span class="pl-eoa">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>bower_components/carpet/dist/carpet.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+
+<span class="pl-s2">    &lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s2">      Carpet.init(); <span class="pl-c"><span class="pl-pdc">//</span> Initialises the framework</span></span>
+<span class="pl-s2">    &lt;/<span class="pl-ent">script</span>&gt;</span>
+  &lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<h2>
+<a id="modules" class="anchor" href="#modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modules</h2>
+
+<p>Carpet.js is about modules so you have to define one before you start.
+Modules are defined very easily:</p>
+
+<p>In html file:</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-eoa">data-module</span>=<span class="pl-s1"><span class="pl-pds">"</span>myFirstModule<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<p>In JS file (before <code>Carpet.init()</code>)</p>
+
+<div class="highlight highlight-js"><pre>Carpet.module(<span class="pl-s1"><span class="pl-pds">'</span>myFirstModule<span class="pl-pds">'</span></span>, <span class="pl-s">function</span> (<span class="pl-vpf">exports</span>, <span class="pl-vpf">settings</span>, <span class="pl-vpf">context</span>) {
+  <span class="pl-s1"><span class="pl-pds">'</span>use strict<span class="pl-pds">'</span></span>;
+
+  <span class="pl-sc">exports</span>.<span class="pl-enf">init</span> <span class="pl-ko">=</span> <span class="pl-s">function</span> () {
+    console<span class="pl-sf">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>I will show when a data-module="myFirstModule" will be found in DOM<span class="pl-pds">'</span></span>);
+  };
+});</pre></div>
+
+<p><code>Carpet.module()</code> takes two parameters:</p>
+
+<ul>
+<li>name of the module (string, it should fit the name put in <code>data-module</code> attribute)</li>
+<li>module body (function which will contain all the module body)</li>
+</ul>
+
+<p>Your module body will be called with three parameters: <code>exports</code>, <code>settings</code> and <code>context</code>.</p>
+
+<ul>
+<li>
+<code>exports</code> - object which will be 'public', you can extend it with a function or properties. <code>exports.init</code> is reserved for the initial function which will be called immediately after module init. If you do not provide <code>exports.init</code> the module will stay in the memory but have to be initialized in another way (e.g. PubSub)</li>
+<li>
+<code>settings</code> - object with module settings. Settings can be passed by the DOM attribute as following:</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>data<span class="pl-ko">-</span>settings<span class="pl-ko">=</span><span class="pl-s1"><span class="pl-pds">"</span>{'key' : 'value', sample: [1, 3, 5]}<span class="pl-pds">"</span></span></pre></div>
+
+<ul>
+<li>
+<code>context</code> - is a HTML DOM context which should be used as scope for all DOM finding actions, e.g. using jQuery:</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>$(<span class="pl-s1"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, context).anything(); <span class="pl-c"><span class="pl-pdc">//</span> or</span>
+$(context).<span class="pl-sf">find</span>(<span class="pl-s1"><span class="pl-pds">'</span>.my-pro-element<span class="pl-pds">'</span></span>).on(<span class="pl-s1"><span class="pl-pds">'</span>click<span class="pl-pds">'</span></span>, anotherFunction);</pre></div>
+
+<p><strong>Additional informations</strong></p>
+
+<p>In module body you can also access its <code>this</code> context where you can find some additional data:</p>
+
+<div class="highlight highlight-js"><pre>  <span class="pl-v">this</span>.name       <span class="pl-c"><span class="pl-pdc">//</span> - (string) containing the name of the module</span>
+  <span class="pl-v">this</span>.moduleBody <span class="pl-c"><span class="pl-pdc">//</span> - (function) body of the module</span>
+  <span class="pl-v">this</span>.settings   <span class="pl-c"><span class="pl-pdc">//</span> - (object) settings object</span>
+  <span class="pl-v">this</span>.methods    <span class="pl-c"><span class="pl-pdc">//</span> - (object) all public methods - same as 'exports'</span></pre></div>
+
+<h2>
+<a id="logging-to-console" class="anchor" href="#logging-to-console" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging to console</h2>
+
+<p>Carpet.js comes with bunch of console.log extensions which will help you to organise your console output.</p>
+
+<p>Sample logs:</p>
+
+<div class="highlight highlight-js"><pre>Carpet<span class="pl-ko">:</span>log [<span class="pl-s1"><span class="pl-pds">"</span>Module: navigation has been loaded to memory<span class="pl-pds">"</span></span>]
+Carpet<span class="pl-ko">:</span>info [<span class="pl-s1"><span class="pl-pds">"</span>Module: navigation has been autoinited<span class="pl-pds">"</span></span>]</pre></div>
+
+<p><strong>Enable logging</strong></p>
+
+<p>Logging is disabled by default. You can easily enable it by just setting the <code>Carpet.loggingEnabled</code> to <code>true</code>.
+Remember the property must be set before <code>Carpet.init()</code>.</p>
+
+<div class="highlight highlight-js"><pre>Carpet.loggingEnabled <span class="pl-ko">=</span> <span class="pl-c1">true</span>;</pre></div>
+
+<p><strong>Use available logging methods</strong></p>
+
+<div class="highlight highlight-js"><pre>Carpet<span class="pl-sf">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>log me<span class="pl-pds">'</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> with log level</span>
+Carpet<span class="pl-sf">.warn</span>(<span class="pl-s1"><span class="pl-pds">'</span>something wrong!<span class="pl-pds">'</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> with warn level</span>
+Carpet<span class="pl-sf">.error</span>(<span class="pl-s1"><span class="pl-pds">'</span>Application abort!!<span class="pl-pds">'</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> with error level</span>
+Carpet<span class="pl-sf">.info</span>(<span class="pl-s1"><span class="pl-pds">'</span>I am awesome<span class="pl-pds">'</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> with info level</span></pre></div>
+
+<p>Logs can take any type and any amount of parameters</p>
+
+<div class="highlight highlight-js"><pre>Carpet<span class="pl-sf">.warn</span>(<span class="pl-s1"><span class="pl-pds">'</span>log me<span class="pl-pds">'</span></span>, {}, [], <span class="pl-cn">1</span>, <span class="pl-ko">-</span><span class="pl-cn">1</span>, <span class="pl-c1">Infinity</span>, <span class="pl-s">function</span>(){} <span class="pl-c"><span class="pl-pdc">/*</span> any other type here <span class="pl-pdc">*/</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> with log level</span></pre></div>
+
+<p><strong>Clearing the output</strong></p>
+
+<p>To clear the output just call <code>Carpet.clearConsole()</code></p>
+
+<h1>
+<a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribution</h1>
+
+<h2>
+<a id="setup-for-development" class="anchor" href="#setup-for-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup for development</h2>
 
 <pre><code>  npm install
-  grunt docs      # Generates docs
   grunt dist      # Generates dist files with full testing and linting
+  # or
   grunt dist-dev  # Generates dist files without checking the code
 </code></pre>
+
+<h2>
+<a id="generating-jsdoc" class="anchor" href="#generating-jsdoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generating JSDoc</h2>
+
+<pre><code>grunt docs
+</code></pre>
+
+<h2>
+<a id="running-unit-tests" class="anchor" href="#running-unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running unit tests</h2>
+
+<pre><code>npm test
+</code></pre>
+
+<p>Feel free to contribute or add <a href="https://github.com/mateuszgachowski/Carpet.js/issues">issues</a> and questions</p>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/mateuszgachowski">mateuszgachowski</a></p>
