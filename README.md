@@ -2,6 +2,8 @@
 
 <small>project icon: Rug by Factorio.us collective from The Noun Project</small>
 
+Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master)](https://travis-ci.org/mateuszgachowski/Carpet.js) Develop: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop)](https://travis-ci.org/mateuszgachowski/Carpet.js)
+
 ## Compiling the framework
 
 ```
