@@ -1,5 +1,5 @@
 /*!
- * Carpet.js v2.0.0 (http://mgachowski.pl)
+ * Carpet.js v2.0.1 (http://mgachowski.pl)
  * Copyright 2014-2014 Mateusz Gachowski <mateusz.gachowski@gmail.com>
  * Licensed under MIT (https://github.com/mateuszgachowski/Carpet.js/blob/master/LICENSE)
  */
