@@ -1,4 +1,4 @@
-# ![Carpet.js Icon](http://gitlab.secrethost.co.uk/mgachowski/carpet-js/raw/develop/carpetjs.svg) Carpet.js
+# ![Carpet.js Icon](http://mgachowski.pl/carpetjs.svg) Carpet.js
 
 <small>project icon: Rug by Factorio.us collective from The Noun Project</small>
 
