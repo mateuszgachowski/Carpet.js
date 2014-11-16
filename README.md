@@ -127,6 +127,8 @@ Carpet.warn('log me', {}, [], 1, -1, Infinity, function(){} /* any other type he
 
 To clear the output just call `Carpet.clearConsole()`
 
+For more information you can check the [API documentation](http://mateuszgachowski.github.io/Carpet.js/api_docs/index.html)
+
 # Contribution
 
 ## Setup for development
