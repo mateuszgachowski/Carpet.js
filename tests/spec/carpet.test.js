@@ -115,4 +115,94 @@
     });
   });
 
+  describe('Carpet.js: Component pattern should behave correctly', function () {
+    it('Carpet.registerComponent should be defined', function () {
+      expect(window.Carpet.registerComponent).toBeDefined();
+    });
+
+    it('Carpet.registerComponent should be a function', function () {
+      expect(typeof window.Carpet.registerComponent).toBe('function');
+    });
+
+    it('Carpet.getComponent should be defined and be a function', function () {
+      expect(window.Carpet.getComponent).toBeDefined();
+      expect(typeof window.Carpet.getComponent).toBe('function');
+    });
+
+    it('calling Carpet.registerComponent should create a module instance in the memory', function () {
+      window.Carpet.registerComponent('testingComponent', function () { return {}; });
+
+      expect(window.Carpet.getComponent('testingComponent')).toBeDefined();
+    });
+
+    it('Carpet.getComponent should return correct instance of the component', function () {
+
+      var componentAPI = {
+        methodA : function () {
+          return 1 + 5;
+        },
+
+        methodB : function () {
+          return 'a' + 'b';
+        },
+
+        property1 : 9,
+        property2 : {},
+        property3 : [1, 5, 9]
+      };
+
+      window.Carpet.registerComponent('testingComponent', function () {
+        return componentAPI;
+      });
+
+      expect(window.Carpet.getComponent('testingComponent')).toEqual(componentAPI);
+    });
+
+    it('this.component should return correct instance of the component in the module', function (done) {
+
+      var componentName = 'testingComponentModule';
+      var moduleName    = 'testingModuleComponent';
+      var componentAPI  = {
+        exampleMethod : function () {}
+      };
+
+      window.Carpet.registerComponent(componentName, function () {
+        return componentAPI;
+      });
+
+      var element = document.createElement('div');
+      element.setAttribute('data-module', moduleName);
+      document.body.appendChild(element);
+
+      window.Carpet.module(moduleName, function (exports, settings, context) {
+        var loadComponent = this.component(componentName);
+
+        expect(loadComponent).toEqual(componentAPI);
+        done();
+      });
+
+      window.Carpet.init();
+    });
+
+    it('component should be loaded only once when required', function () {
+
+      var componentBodyCounter = 0;
+      var componentFunctionCounter = 0;
+
+      window.Carpet.registerComponent('functionComponent', function () {
+        componentBodyCounter++;
+        return function () {
+          componentFunctionCounter++;
+        };
+      });
+
+      window.Carpet.getComponent('functionComponent')(); // First require
+      window.Carpet.getComponent('functionComponent')(); // Second require
+
+      expect(componentBodyCounter).toEqual(1); // Body fired only once (pending first require)
+      expect(componentFunctionCounter).toEqual(2); // Function in the componentAPI called two times (one pending each)
+
+    });
+  });
+
 })(this, this.document);
