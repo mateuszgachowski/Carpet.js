@@ -83,10 +83,10 @@ $(context).find('.my-pro-element').on('click', anotherFunction);
 In module body you can also access its `this` context where you can find some additional data:
 
 ```js
-  this.name       // - (string) containing the name of the module
-  this.moduleBody // - (function) body of the module
-  this.settings   // - (object) settings object
-  this.methods    // - (object) all public methods - same as 'exports'
+this.name       // - (string) containing the name of the module
+this.moduleBody // - (function) body of the module
+this.settings   // - (object) settings object
+this.methods    // - (object) all public methods - same as 'exports'
 ```
 
 ## Logging to console
@@ -132,10 +132,10 @@ To clear the output just call `Carpet.clearConsole()`
 ## Setup for development
 
 ```
-  npm install
-  grunt dist      # Generates dist files with full testing and linting
-  # or
-  grunt dist-dev  # Generates dist files without checking the code
+npm install
+grunt dist      # Generates dist files with full testing and linting
+# or
+grunt dist-dev  # Generates dist files without checking the code
 ```
 
 ## Generating JSDoc
