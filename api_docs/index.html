@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Index</h1>
+    
+    
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1><img src="http://mgachowski.pl/carpetjs.svg" alt="Carpet.js Icon"> Carpet.js</h1>
+<p><small>project icon: Rug by Factorio.us collective from The Noun Project</small></p>
+<p>Master: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master" alt="Build Status"></a> Develop: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop" alt="Build Status"></a></p>
+<h1>Framework Usage</h1>
+<h2>Installation</h2>
+<pre><code>bower install carpet</code></pre>
+<p>or download the compressed file <a href="https://github.com/mateuszgachowski/Carpet.js/blob/master/dist/carpet.min.js">from here</a></p>
+<h2>Minimal application</h2>
+<p>Minimal application will not do anything until you define some modules.</p>
+<p>Example:</p>
+<pre><code class="lang-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Carpet.js - Sample usage&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- your code here --&gt;
+    &lt;script src=&quot;bower_components/carpet/dist/carpet.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;script&gt;
+      Carpet.init(); // Initialises the framework
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2>Modules</h2>
+<p>Carpet.js is about modules so you have to define one before you start.
+Modules are defined very easily:</p>
+<p>In html file:</p>
+<pre><code class="lang-html">&lt;div data-module=&quot;myFirstModule&quot;&gt;&lt;/div&gt;</code></pre>
+<p>In JS file (before <code>Carpet.init()</code>)</p>
+<pre><code class="lang-js">Carpet.module('myFirstModule', function (exports, settings, context) {
+  'use strict';
+
+  exports.init = function () {
+    console.log('I will show when a data-module=&quot;myFirstModule&quot; will be found in DOM');
+  };
+});</code></pre>
+<p><code>Carpet.module()</code> takes two parameters:
+- name of the module (string, it should fit the name put in <code>data-module</code> attribute)
+- module body (function which will contain all the module body)</p>
+<p>Your module body will be called with three parameters: <code>exports</code>, <code>settings</code> and <code>context</code>.</p>
+<ul>
+<li><code>exports</code> - object which will be 'public', you can extend it with a function or properties. <code>exports.init</code> is reserved for the initial function which will be called immediately after module init. If you do not provide <code>exports.init</code> the module will stay in the memory but have to be initialized in another way (e.g. PubSub)</li>
+<li><p><code>settings</code> - object with module settings. Settings can be passed by the DOM attribute as following:</p>
+<pre><code class="lang-js">data-settings=&quot;{'key' : 'value', sample: [1, 3, 5]}&quot;</code></pre>
+</li>
+<li><p><code>context</code> - is a HTML DOM context which should be used as scope for all DOM finding actions, e.g. using jQuery:</p>
+<pre><code class="lang-js">$('a', context).anything(); // or
+$(context).find('.my-pro-element').on('click', anotherFunction);</code></pre>
+</li>
+</ul>
+<p><strong>Additional informations</strong></p>
+<p>In module body you can also access its <code>this</code> context where you can find some additional data:</p>
+<pre><code class="lang-js">this.name       // - (string) containing the name of the module
+this.moduleBody // - (function) body of the module
+this.settings   // - (object) settings object
+this.methods    // - (object) all public methods - same as 'exports'</code></pre>
+<h2>Logging to console</h2>
+<p>Carpet.js comes with bunch of console.log extensions which will help you to organise your console output.</p>
+<p>Sample logs:</p>
+<pre><code class="lang-js">Carpet:log [&quot;Module: navigation has been loaded to memory&quot;]
+Carpet:info [&quot;Module: navigation has been autoinited&quot;]</code></pre>
+<p><strong>Enable logging</strong></p>
+<p>Logging is disabled by default. You can easily enable it by just setting the <code>Carpet.loggingEnabled</code> to <code>true</code>.
+Remember the property must be set before <code>Carpet.init()</code>.</p>
+<pre><code class="lang-js">Carpet.loggingEnabled = true;</code></pre>
+<p><strong>Use available logging methods</strong></p>
+<pre><code class="lang-js">Carpet.log('log me'); // with log level
+Carpet.warn('something wrong!'); // with warn level
+Carpet.error('Application abort!!'); // with error level
+Carpet.info('I am awesome'); // with info level</code></pre>
+<p>Logs can take any type and any amount of parameters</p>
+<pre><code class="lang-js">Carpet.warn('log me', {}, [], 1, -1, Infinity, function(){} /* any other type here */); // with log level</code></pre>
+<p><strong>Clearing the output</strong></p>
+<p>To clear the output just call <code>Carpet.clearConsole()</code></p>
+<h1>Contribution</h1>
+<h2>Setup for development</h2>
+<pre><code>npm install
+grunt dist      # Generates dist files with full testing and linting
+# or
+grunt dist-dev  # Generates dist files without checking the code</code></pre>
+<h2>Generating JSDoc</h2>
+<pre><code>grunt docs</code></pre>
+<h2>Running unit tests</h2>
+<pre><code>npm test</code></pre>
+<p>Feel free to contribute or add <a href="https://github.com/mateuszgachowski/Carpet.js/issues">issues</a> and questions</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Namespaces</h3><ul><li><a href="Carpet.html">Carpet</a></li><li><a href="Carpet.advice.html">advice</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Nov 16 2014 02:14:15 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
