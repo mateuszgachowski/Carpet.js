@@ -2,17 +2,19 @@
 (function (window, document, undefined) {
   'use strict';
 
-  describe('Carpet.js: Advice methods should be working', function () {
-    it('Carpet.advice is defined', function () {
-      expect(window.Carpet.advice).toBeDefined();
+  var advice = Carpet.getComponent('advice');
+
+  describe('Component: Advice methods should be working', function () {
+    it('advice is defined', function () {
+      expect(advice).toBeDefined();
     });
 
     it('advice should be an object with correct methods', function () {
-      expect(typeof window.Carpet.advice).toBe('object');
-      expect(typeof window.Carpet.advice.around).toBe('function');
-      expect(typeof window.Carpet.advice.before).toBe('function');
-      expect(typeof window.Carpet.advice.after).toBe('function');
-      expect(typeof window.Carpet.advice.withAdvice).toBe('function');
+      expect(typeof advice).toBe('object');
+      expect(typeof advice.around).toBe('function');
+      expect(typeof advice.before).toBe('function');
+      expect(typeof advice.after).toBe('function');
+      expect(typeof advice.withAdvice).toBe('function');
     });
 
     it('advice.before should call the "before" function before the base function and return the base function', function () {
@@ -23,7 +25,7 @@
         return 'base';
       }
 
-      var advised = Carpet.advice.before(base, function (arg) {
+      var advised = advice.before(base, function (arg) {
         test1 += 'Before: ' + arg + ', ';
         return 'before';
       });
@@ -40,7 +42,7 @@
         return 'base';
       }
 
-      var advised = Carpet.advice.after(base, function (arg) {
+      var advised = advice.after(base, function (arg) {
         test1 += ', After: ' + arg;
         return 'after';
       });
@@ -58,7 +60,7 @@
         return 'base';
       }
 
-      var advised = Carpet.advice.around(base, function (orig, arg) {
+      var advised = advice.around(base, function (orig, arg) {
         test1 += '|';
         orig(arg);
         test1 += '|';
@@ -85,7 +87,7 @@
         }
       };
 
-      Carpet.advice.withAdvice.call(subject);
+      advice.withAdvice.call(subject);
 
       subject.before('a', function () {
         this.testa += 'BEFORE!';

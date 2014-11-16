@@ -46,9 +46,9 @@ module.exports = function (grunt) {
 
     jasmine: {
       pivotal: {
-        src: ['src/carpet.js', 'src/advice.js'],
+        src: ['src/carpet.js', 'src/components/*'],
         options: {
-          specs: 'tests/spec/*.js'
+          specs: ['tests/spec/*.js', 'tests/spec/components/*.js']
         }
       }
     },
@@ -82,8 +82,7 @@ module.exports = function (grunt) {
       },
       carpet: {
         src: [
-          'src/carpet.js',
-          'src/advice.js'
+          'src/carpet.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }
