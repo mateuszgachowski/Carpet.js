@@ -4,6 +4,13 @@
 
 Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master)](https://travis-ci.org/mateuszgachowski/Carpet.js) Develop: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop)](https://travis-ci.org/mateuszgachowski/Carpet.js)
 
+# Features
+
+- Lightweight: Minified: 2.3K, Minified & Gzipped: < 1K
+- Easy and Module based
+- Easily extendable by components
+
+
 # Framework Usage
 
 ## Installation
