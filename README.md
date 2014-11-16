@@ -152,4 +152,44 @@ grunt docs
 npm test
 ```
 
+## Branching model and submitting changes
+
+Carpet.js is using the great [GitHub Flow](https://github.com/mborsuk/hubflow). Please follow installation instruction from their README file.
+
+After you install HubFlow on your machine run this command in the **forked** Carpet.js repository:
+
+```
+git hf init
+```
+
+Now you should be ready to start working on a feature. Feature naming pattern should fit the following:
+
+```
+mg-short-description
+^      ^-- Short description separated by dashes (-)
+^--- Your initials
+
+Examples:
+
+mg-component-pubsub
+ms-bug-21-wrong-casting # bug or others can be followed by GitHub issue number
+```
+
+To start working on a feature you will have to create a feature branch.
+
+```
+git hf feature start mg-component-pubsub
+```
+
+Then you can easily work on your branch, commit and `git hf push` your changes.
+After you finish your functionality and all tests are passing correctly (locally and by Travis CI) you can submit a Pull Request.
+
+If the Pull request has been merged correctly you can just finish the branch by:
+
+```
+git hf feature finish mg-component-pubsub
+```
+
+Thats all, your feature will be released in next version!
+
 Feel free to contribute or add [issues](https://github.com/mateuszgachowski/Carpet.js/issues) and questions
