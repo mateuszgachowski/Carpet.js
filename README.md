@@ -6,7 +6,7 @@ Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?br
 
 # Features
 
-- Lightweight: Minified: 2.3K, Minified & Gzipped: < 1K
+- Lightweight: Minified: 2.2K, Minified & Gzipped: < 1K
 - Easy and Module based
 - Easily extendable by components
 
