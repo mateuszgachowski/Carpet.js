@@ -200,7 +200,7 @@ Components have to be loaded before modules, so the structure looks like this:
 
 ```
 
-Carpet.js comes with some components included, but not they are not loaded in the core library by default. You can just add them to your html file with a `script` tag.
+Carpet.js comes with some components included, but they are not added in the core library by default. You must add them to your html file with a `script` tag.
 
 # Contribution
 
