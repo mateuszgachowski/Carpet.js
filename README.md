@@ -136,6 +136,70 @@ To clear the output just call `Carpet.clearConsole()`
 
 For more information you can check the [API documentation](http://mateuszgachowski.github.io/Carpet.js/api_docs/index.html)
 
+# Writing your own components
+
+Components are separated logic in Carpet.js. They can be loaded inside the modules. Before first load they stay in the memory - not executed.
+
+*You can use them as helpers or any other kind of separated logic.*
+
+Writing a component is very easy:
+
+```js
+Carpet.registerComponent('componentName', function () {
+
+  Carpet.log(this); // => { name: 'componentName', componentBody: function...}
+
+  return {
+    componentMethod : function () {
+      return 1;
+    },
+
+    componentProperty : [1, 5, 7],
+
+    anythingYouWant : {}
+  };
+});
+```
+
+Component is inactive until the first 'require'. You can get the component in two ways:
+
+```js
+// Globally
+Carpet.getComponent('componentName'); // => { componentMethod: function...}
+
+// Locally in the module (preferred)
+Carpet.module('myModule', function (exports, settings, context) {
+  var mySweetComponent = this.component('componentName');
+
+  Carpet.log(mySweetComponent);
+  // =>
+  // {
+  //  componentMethod : function () { return 1; },
+  //  componentProperty : [1, 5, 7],
+  //  anythingYouWant : {}
+  // }
+});
+```
+
+Components have to be loaded before modules, so the structure looks like this:
+
+```html
+  <!-- Carpet.js -->
+  <script src="carpet.min.js"></script>
+
+  <!-- Components -->
+  <script src="components/myComponent.js"></script> <!-- HERE -->
+
+  <!-- Modules -->
+  <script src="modules/myModule.js"></script>
+
+  <!-- Application init -->
+  <script>Carpet.init();</script>
+
+```
+
+Carpet.js comes with some components included, but not they are not loaded in the core library by default. You can just add them to your html file with a `script` tag.
+
 # Contribution
 
 ## Setup for development
@@ -198,5 +262,46 @@ git hf feature finish mg-component-pubsub
 ```
 
 Thats all, your feature will be released in next version!
+
+## Writing build-in components
+
+Writing Carpet.js components don't differ from normal component registration pattern but requires documentation and full test coverage.
+
+As a sample you can take a look at the advice component and its tests:
+
+```js
+/**
+ * @module advice
+ */
+Carpet.registerComponent('advice', function () {
+  'use strict';
+
+  return {
+    /**
+     * Wrapes function around
+     *
+     * @param  {Function} base    Function to wrap on
+     * @param  {Function} wrapped Wrapping function
+     * @return {Function}         Wrapped function body
+     */
+    around: function (base, wrapped) {
+      return function composedAround() {
+        // unpacking arguments by hand is faster
+        var i = 0;
+        var l = arguments.length;
+        var args = new Array(l + 1);
+
+        args[0] = base.bind(this);
+        for (; i < l; i++) {
+          args[i + 1] = arguments[i];
+        }
+        return wrapped.apply(this, args);
+      };
+    },
+    // etc..
+    // [...]
+  };
+});
+```
 
 Feel free to contribute or add [issues](https://github.com/mateuszgachowski/Carpet.js/issues) and questions
