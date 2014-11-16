@@ -1,16 +1,13 @@
-(function () {
+/**
+ * @module advice
+ */
+Carpet.registerComponent('advice', function () {
   'use strict';
-  /**
-   * @namespace Carpet.advice
-   * @type {Object}
-   */
 
-  Carpet.advice = {
-
+  return {
     /**
      * Wrapes function around
      *
-     * @memberOf Carpet.advice
      * @param  {Function} base    Function to wrap on
      * @param  {Function} wrapped Wrapping function
      * @return {Function}         Wrapped function body
@@ -33,7 +30,6 @@
     /**
      * Fires function before the base one
      *
-     * @memberOf Carpet.advice
      * @param  {Function} base   Base function to be advised
      * @param  {Function} before Function to be called before
      * @return {Function}        Function body with your function before
@@ -49,7 +45,6 @@
     /**
      * Fires function after the base on
      *
-     * @memberOf Carpet.advice
      * @param  {Function} base  Base function to be advised
      * @param  {Function} after Function to be called after
      * @return {Function}       Function body with your function before
@@ -84,15 +79,13 @@
      * // => 'Hello '
      * // => 'World!'
      *
-     * @memberOf Carpet.advice
      */
     withAdvice: function () {
       ['before', 'after', 'around'].forEach(function (m) {
         this[m] = function (method, fn) {
-          this[method] = Carpet.advice[m](this[method], fn);
+          this[method] = Carpet.getComponent('advice')[m](this[method], fn);
         };
       }, this);
     }
   };
-
-})();
+});
