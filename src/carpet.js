@@ -13,7 +13,26 @@
     function Carpet () {
 
       var carpetModules = {};
+      var carpetComponents = {};
+
       var arraySlice = Array.prototype.slice;
+
+      var getComponent = function (componentName) {
+        var component;
+
+        component = carpetComponents[componentName];
+
+        if (component) {
+          if (!component.initialized) {
+            component.instance = component.componentBody();
+          }
+          return component.instance;
+        }
+        else {
+          this.warn('Component: {0} has not been found in memory'.replace('{0}', componentName));
+        }
+      };
+
       this.loggingEnabled = false;
 
       /**
@@ -172,10 +191,25 @@
           moduleBody : initCallback,
           name       : moduleName,
           settings   : {},
-          methods    : {}
+          methods    : {},
+          component  : getComponent
         };
 
-        this.log('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
+        this.info('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
+      };
+
+      this.registerComponent = function (componentName, initCallback) {
+        if (carpetComponents[componentName]) {
+          this.warn('Component: {0} already exists. Name collision'.replace('{0}', componentName));
+        }
+
+        carpetComponents[componentName] = {
+          name          : componentName,
+          componentBody : initCallback,
+          initialized   : false
+        };
+
+        this.info('Component: {0} has been loaded to memory'.replace('{0}', componentName));
       };
 
       /**
