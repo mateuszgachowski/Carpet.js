@@ -161,10 +161,12 @@ Carpet.registerComponent('componentName', function () {
 });
 ```
 
+Component can return any type. Object with methods or a simple function are the preferred pattern.
+
 Component is inactive until the first 'require'. You can get the component in two ways:
 
 ```js
-// Globally
+// Globally (from anywhere)
 Carpet.getComponent('componentName'); // => { componentMethod: function...}
 
 // Locally in the module (preferred)
