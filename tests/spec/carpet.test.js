@@ -174,7 +174,7 @@
       element.setAttribute('data-module', moduleName);
       document.body.appendChild(element);
 
-      window.Carpet.module(moduleName, function (exports, settings, context) {
+      window.Carpet.module(moduleName, function () {
         var loadComponent = this.component(componentName);
 
         expect(loadComponent).toEqual(componentAPI);
