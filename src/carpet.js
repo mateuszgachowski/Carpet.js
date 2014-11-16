@@ -239,7 +239,7 @@
          * ...
          *
          * Carpet.getComponent('uber'); // => 1
-         * 
+         *
          * @memberOf Carpet
          * @method getComponent
          *
