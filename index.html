@@ -37,6 +37,15 @@
 <p>Master: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master" alt="Build Status"></a> Develop: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop" alt="Build Status"></a></p>
 
 <h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>Lightweight: Minified: 2.2K, Minified &amp; Gzipped: &lt; 1K</li>
+<li>Easy and Module based</li>
+<li>Easily extendable by components</li>
+</ul>
+
+<h1>
 <a id="framework-usage" class="anchor" href="#framework-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Framework Usage</h1>
 
 <h2>
@@ -120,10 +129,10 @@ $(context).<span class="pl-sf">find</span>(<span class="pl-s1"><span class="pl-p
 
 <p>In module body you can also access its <code>this</code> context where you can find some additional data:</p>
 
-<div class="highlight highlight-js"><pre>  <span class="pl-v">this</span>.name       <span class="pl-c"><span class="pl-pdc">//</span> - (string) containing the name of the module</span>
-  <span class="pl-v">this</span>.moduleBody <span class="pl-c"><span class="pl-pdc">//</span> - (function) body of the module</span>
-  <span class="pl-v">this</span>.settings   <span class="pl-c"><span class="pl-pdc">//</span> - (object) settings object</span>
-  <span class="pl-v">this</span>.methods    <span class="pl-c"><span class="pl-pdc">//</span> - (object) all public methods - same as 'exports'</span></pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-v">this</span>.name       <span class="pl-c"><span class="pl-pdc">//</span> - (string) containing the name of the module</span>
+<span class="pl-v">this</span>.moduleBody <span class="pl-c"><span class="pl-pdc">//</span> - (function) body of the module</span>
+<span class="pl-v">this</span>.settings   <span class="pl-c"><span class="pl-pdc">//</span> - (object) settings object</span>
+<span class="pl-v">this</span>.methods    <span class="pl-c"><span class="pl-pdc">//</span> - (object) all public methods - same as 'exports'</span></pre></div>
 
 <h2>
 <a id="logging-to-console" class="anchor" href="#logging-to-console" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging to console</h2>
@@ -157,16 +166,79 @@ Carpet<span class="pl-sf">.info</span>(<span class="pl-s1"><span class="pl-pds">
 
 <p>To clear the output just call <code>Carpet.clearConsole()</code></p>
 
+<p>For more information you can check the <a href="http://mateuszgachowski.github.io/Carpet.js/api_docs/index.html">API documentation</a></p>
+
+<h1>
+<a id="writing-your-own-components" class="anchor" href="#writing-your-own-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing your own components</h1>
+
+<p>Components are separated logic in Carpet.js. They can be loaded inside the modules. Before first load they stay in the memory - not executed.</p>
+
+<p><em>You can use them as helpers or any other kind of separated logic.</em></p>
+
+<p>Writing a component is very easy:</p>
+
+<div class="highlight highlight-js"><pre>Carpet.registerComponent(<span class="pl-s1"><span class="pl-pds">'</span>componentName<span class="pl-pds">'</span></span>, <span class="pl-s">function</span> () {
+
+  Carpet<span class="pl-sf">.log</span>(<span class="pl-v">this</span>); <span class="pl-c"><span class="pl-pdc">//</span> =&gt; { name: 'componentName', componentBody: function...}</span>
+
+  <span class="pl-k">return</span> {
+    <span class="pl-enf">componentMethod</span> : <span class="pl-s">function</span> () {
+      <span class="pl-k">return</span> <span class="pl-cn">1</span>;
+    },
+
+    componentProperty <span class="pl-ko">:</span> [<span class="pl-cn">1</span>, <span class="pl-cn">5</span>, <span class="pl-cn">7</span>],
+
+    anythingYouWant <span class="pl-ko">:</span> {}
+  };
+});</pre></div>
+
+<p>Component can return any type. Object with methods or a simple function are the preferred pattern.</p>
+
+<p>Component is inactive until the first 'require'. You can get the component in two ways:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c"><span class="pl-pdc">//</span> Globally (from anywhere)</span>
+Carpet.getComponent(<span class="pl-s1"><span class="pl-pds">'</span>componentName<span class="pl-pds">'</span></span>); <span class="pl-c"><span class="pl-pdc">//</span> =&gt; { componentMethod: function...}</span>
+
+<span class="pl-c"><span class="pl-pdc">//</span> Locally in the module (preferred)</span>
+Carpet.module(<span class="pl-s1"><span class="pl-pds">'</span>myModule<span class="pl-pds">'</span></span>, <span class="pl-s">function</span> (<span class="pl-vpf">exports</span>, <span class="pl-vpf">settings</span>, <span class="pl-vpf">context</span>) {
+  <span class="pl-s">var</span> mySweetComponent <span class="pl-ko">=</span> <span class="pl-v">this</span>.component(<span class="pl-s1"><span class="pl-pds">'</span>componentName<span class="pl-pds">'</span></span>);
+
+  Carpet<span class="pl-sf">.log</span>(mySweetComponent);
+  <span class="pl-c"><span class="pl-pdc">//</span> =&gt;</span>
+  <span class="pl-c"><span class="pl-pdc">//</span> {</span>
+  <span class="pl-c"><span class="pl-pdc">//</span>  componentMethod : function () { return 1; },</span>
+  <span class="pl-c"><span class="pl-pdc">//</span>  componentProperty : [1, 5, 7],</span>
+  <span class="pl-c"><span class="pl-pdc">//</span>  anythingYouWant : {}</span>
+  <span class="pl-c"><span class="pl-pdc">//</span> }</span>
+});</pre></div>
+
+<p>Components have to be loaded before modules, so the structure looks like this:</p>
+
+<div class="highlight highlight-html"><pre>  <span class="pl-c"><span class="pl-pdc">&lt;!--</span> Carpet.js <span class="pl-pdc">--&gt;</span></span>
+<span class="pl-s2">  &lt;<span class="pl-ent">script</span> <span class="pl-eoa">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>carpet.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+
+  <span class="pl-c"><span class="pl-pdc">&lt;!--</span> Components <span class="pl-pdc">--&gt;</span></span>
+<span class="pl-s2">  &lt;<span class="pl-ent">script</span> <span class="pl-eoa">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>components/myComponent.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span> <span class="pl-c"><span class="pl-pdc">&lt;!--</span> HERE <span class="pl-pdc">--&gt;</span></span>
+
+  <span class="pl-c"><span class="pl-pdc">&lt;!--</span> Modules <span class="pl-pdc">--&gt;</span></span>
+<span class="pl-s2">  &lt;<span class="pl-ent">script</span> <span class="pl-eoa">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>modules/myModule.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+
+  <span class="pl-c"><span class="pl-pdc">&lt;!--</span> Application init <span class="pl-pdc">--&gt;</span></span>
+<span class="pl-s2">  &lt;<span class="pl-ent">script</span>&gt;Carpet.init();&lt;/<span class="pl-ent">script</span>&gt;</span>
+</pre></div>
+
+<p>Carpet.js comes with some components included, but they are not added in the core library by default. You must add them to your html file with a <code>script</code> tag.</p>
+
 <h1>
 <a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribution</h1>
 
 <h2>
 <a id="setup-for-development" class="anchor" href="#setup-for-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup for development</h2>
 
-<pre><code>  npm install
-  grunt dist      # Generates dist files with full testing and linting
-  # or
-  grunt dist-dev  # Generates dist files without checking the code
+<pre><code>npm install
+grunt dist      # Generates dist files with full testing and linting
+# or
+grunt dist-dev  # Generates dist files without checking the code
 </code></pre>
 
 <h2>
@@ -180,6 +252,83 @@ Carpet<span class="pl-sf">.info</span>(<span class="pl-s1"><span class="pl-pds">
 
 <pre><code>npm test
 </code></pre>
+
+<h2>
+<a id="branching-model-and-submitting-changes" class="anchor" href="#branching-model-and-submitting-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branching model and submitting changes</h2>
+
+<p>Carpet.js is using the great <a href="https://github.com/mborsuk/hubflow">GitHub Flow</a>. Please follow installation instruction from their README file.</p>
+
+<p>After you install HubFlow on your machine run this command in the <strong>forked</strong> Carpet.js repository:</p>
+
+<pre><code>git hf init
+</code></pre>
+
+<p>Now you should be ready to start working on a feature. Feature naming pattern should fit the following:</p>
+
+<pre><code>mg-short-description
+^      ^-- Short description separated by dashes (-)
+^--- Your initials
+
+Examples:
+
+mg-component-pubsub
+ms-bug-21-wrong-casting # bug or others can be followed by GitHub issue number
+</code></pre>
+
+<p>To start working on a feature you will have to create a feature branch.</p>
+
+<pre><code>git hf feature start mg-component-pubsub
+</code></pre>
+
+<p>Then you can easily work on your branch, commit and <code>git hf push</code> your changes.
+After you finish your functionality and all tests are passing correctly (locally and by Travis CI) you can submit a Pull Request.</p>
+
+<p>If the Pull request has been merged correctly you can just finish the branch by:</p>
+
+<pre><code>git hf feature finish mg-component-pubsub
+</code></pre>
+
+<p>Thats all, your feature will be released in next version!</p>
+
+<h2>
+<a id="writing-build-in-components" class="anchor" href="#writing-build-in-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing build-in components</h2>
+
+<p>Writing Carpet.js components don't differ from normal component registration pattern but requires documentation and full test coverage.</p>
+
+<p>As a sample you can take a look at the advice component and its tests:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c"><span class="pl-pdc">/**</span></span>
+<span class="pl-c"> * @module advice</span>
+<span class="pl-c"> <span class="pl-pdc">*/</span></span>
+Carpet.registerComponent(<span class="pl-s1"><span class="pl-pds">'</span>advice<span class="pl-pds">'</span></span>, <span class="pl-s">function</span> () {
+  <span class="pl-s1"><span class="pl-pds">'</span>use strict<span class="pl-pds">'</span></span>;
+
+  <span class="pl-k">return</span> {
+    <span class="pl-c"><span class="pl-pdc">/**</span></span>
+<span class="pl-c">     * Wrapes function around</span>
+<span class="pl-c">     *</span>
+<span class="pl-c">     * @param  {Function} base    Function to wrap on</span>
+<span class="pl-c">     * @param  {Function} wrapped Wrapping function</span>
+<span class="pl-c">     * @return {Function}         Wrapped function body</span>
+<span class="pl-c">     <span class="pl-pdc">*/</span></span>
+    <span class="pl-enf">around</span>: <span class="pl-s">function</span> (<span class="pl-vpf">base</span>, <span class="pl-vpf">wrapped</span>) {
+      <span class="pl-k">return</span> <span class="pl-s">function</span> <span class="pl-enf">composedAround</span>() {
+        <span class="pl-c"><span class="pl-pdc">//</span> unpacking arguments by hand is faster</span>
+        <span class="pl-s">var</span> i <span class="pl-ko">=</span> <span class="pl-cn">0</span>;
+        <span class="pl-s">var</span> l <span class="pl-ko">=</span> arguments.length;
+        <span class="pl-s">var</span> args <span class="pl-ko">=</span> <span class="pl-ko">new</span> <span class="pl-enti">Array</span>(l <span class="pl-ko">+</span> <span class="pl-cn">1</span>);
+
+        args[<span class="pl-cn">0</span>] <span class="pl-ko">=</span> base.bind(<span class="pl-v">this</span>);
+        <span class="pl-k">for</span> (; i <span class="pl-ko">&lt;</span> l; i<span class="pl-ko">++</span>) {
+          args[i <span class="pl-ko">+</span> <span class="pl-cn">1</span>] <span class="pl-ko">=</span> arguments[i];
+        }
+        <span class="pl-k">return</span> wrapped.<span class="pl-sf">apply</span>(<span class="pl-v">this</span>, args);
+      };
+    },
+    <span class="pl-c"><span class="pl-pdc">//</span> etc..</span>
+    <span class="pl-c"><span class="pl-pdc">//</span> [...]</span>
+  };
+});</pre></div>
 
 <p>Feel free to contribute or add <a href="https://github.com/mateuszgachowski/Carpet.js/issues">issues</a> and questions</p>
       </section>
