@@ -44,6 +44,12 @@
         <article><h1><img src="http://mgachowski.pl/carpetjs.svg" alt="Carpet.js Icon"> Carpet.js</h1>
 <p><small>project icon: Rug by Factorio.us collective from The Noun Project</small></p>
 <p>Master: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master" alt="Build Status"></a> Develop: <a href="https://travis-ci.org/mateuszgachowski/Carpet.js"><img src="https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop" alt="Build Status"></a></p>
+<h1>Features</h1>
+<ul>
+<li>Lightweight: Minified: 2.2K, Minified &amp; Gzipped: &lt; 1K</li>
+<li>Easy and Module based</li>
+<li>Easily extendable by components</li>
+</ul>
 <h1>Framework Usage</h1>
 <h2>Installation</h2>
 <pre><code>bower install carpet</code></pre>
@@ -117,6 +123,55 @@ Carpet.info('I am awesome'); // with info level</code></pre>
 <pre><code class="lang-js">Carpet.warn('log me', {}, [], 1, -1, Infinity, function(){} /* any other type here */); // with log level</code></pre>
 <p><strong>Clearing the output</strong></p>
 <p>To clear the output just call <code>Carpet.clearConsole()</code></p>
+<p>For more information you can check the <a href="http://mateuszgachowski.github.io/Carpet.js/api_docs/index.html">API documentation</a></p>
+<h1>Writing your own components</h1>
+<p>Components are separated logic in Carpet.js. They can be loaded inside the modules. Before first load they stay in the memory - not executed.</p>
+<p><em>You can use them as helpers or any other kind of separated logic.</em></p>
+<p>Writing a component is very easy:</p>
+<pre><code class="lang-js">Carpet.registerComponent('componentName', function () {
+
+  Carpet.log(this); // =&gt; { name: 'componentName', componentBody: function...}
+
+  return {
+    componentMethod : function () {
+      return 1;
+    },
+
+    componentProperty : [1, 5, 7],
+
+    anythingYouWant : {}
+  };
+});</code></pre>
+<p>Component can return any type. Object with methods or a simple function are the preferred pattern.</p>
+<p>Component is inactive until the first 'require'. You can get the component in two ways:</p>
+<pre><code class="lang-js">// Globally (from anywhere)
+Carpet.getComponent('componentName'); // =&gt; { componentMethod: function...}
+
+// Locally in the module (preferred)
+Carpet.module('myModule', function (exports, settings, context) {
+  var mySweetComponent = this.component('componentName');
+
+  Carpet.log(mySweetComponent);
+  // =&gt;
+  // {
+  //  componentMethod : function () { return 1; },
+  //  componentProperty : [1, 5, 7],
+  //  anythingYouWant : {}
+  // }
+});</code></pre>
+<p>Components have to be loaded before modules, so the structure looks like this:</p>
+<pre><code class="lang-html">  &lt;!-- Carpet.js --&gt;
+  &lt;script src=&quot;carpet.min.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Components --&gt;
+  &lt;script src=&quot;components/myComponent.js&quot;&gt;&lt;/script&gt; &lt;!-- HERE --&gt;
+
+  &lt;!-- Modules --&gt;
+  &lt;script src=&quot;modules/myModule.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Application init --&gt;
+  &lt;script&gt;Carpet.init();&lt;/script&gt;</code></pre>
+<p>Carpet.js comes with some components included, but they are not added in the core library by default. You must add them to your html file with a <code>script</code> tag.</p>
 <h1>Contribution</h1>
 <h2>Setup for development</h2>
 <pre><code>npm install
@@ -127,6 +182,61 @@ grunt dist-dev  # Generates dist files without checking the code</code></pre>
 <pre><code>grunt docs</code></pre>
 <h2>Running unit tests</h2>
 <pre><code>npm test</code></pre>
+<h2>Branching model and submitting changes</h2>
+<p>Carpet.js is using the great <a href="https://github.com/mborsuk/hubflow">GitHub Flow</a>. Please follow installation instruction from their README file.</p>
+<p>After you install HubFlow on your machine run this command in the <strong>forked</strong> Carpet.js repository:</p>
+<pre><code>git hf init</code></pre>
+<p>Now you should be ready to start working on a feature. Feature naming pattern should fit the following:</p>
+<pre><code>mg-short-description
+^      ^-- Short description separated by dashes (-)
+^--- Your initials
+
+Examples:
+
+mg-component-pubsub
+ms-bug-21-wrong-casting # bug or others can be followed by GitHub issue number</code></pre>
+<p>To start working on a feature you will have to create a feature branch.</p>
+<pre><code>git hf feature start mg-component-pubsub</code></pre>
+<p>Then you can easily work on your branch, commit and <code>git hf push</code> your changes.
+After you finish your functionality and all tests are passing correctly (locally and by Travis CI) you can submit a Pull Request.</p>
+<p>If the Pull request has been merged correctly you can just finish the branch by:</p>
+<pre><code>git hf feature finish mg-component-pubsub</code></pre>
+<p>Thats all, your feature will be released in next version!</p>
+<h2>Writing build-in components</h2>
+<p>Writing Carpet.js components don't differ from normal component registration pattern but requires documentation and full test coverage.</p>
+<p>As a sample you can take a look at the advice component and its tests:</p>
+<pre><code class="lang-js">/**
+ * @module advice
+ */
+Carpet.registerComponent('advice', function () {
+  'use strict';
+
+  return {
+    /**
+     * Wrapes function around
+     *
+     * @param  {Function} base    Function to wrap on
+     * @param  {Function} wrapped Wrapping function
+     * @return {Function}         Wrapped function body
+     */
+    around: function (base, wrapped) {
+      return function composedAround() {
+        // unpacking arguments by hand is faster
+        var i = 0;
+        var l = arguments.length;
+        var args = new Array(l + 1);
+
+        args[0] = base.bind(this);
+        for (; i &lt; l; i++) {
+          args[i + 1] = arguments[i];
+        }
+        return wrapped.apply(this, args);
+      };
+    },
+    // etc..
+    // [...]
+  };
+});</code></pre>
 <p>Feel free to contribute or add <a href="https://github.com/mateuszgachowski/Carpet.js/issues">issues</a> and questions</p></article>
     </section>
 
@@ -138,13 +248,13 @@ grunt dist-dev  # Generates dist files without checking the code</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Namespaces</h3><ul><li><a href="Carpet.html">Carpet</a></li><li><a href="Carpet.advice.html">advice</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-advice.html">advice</a></li></ul><h3>Namespaces</h3><ul><li><a href="Carpet.html">Carpet</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Nov 16 2014 02:14:15 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Nov 16 2014 23:22:08 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
