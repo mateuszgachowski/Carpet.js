@@ -10,6 +10,16 @@ Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?br
 - Easy and Module based
 - Easily extendable by components
 
+**Browser Support (tested)**
+
+- IE 9.0.0 (Windows Vista)
+- IE 10.0.0 (Windows 8)
+- IE 11.0.0 (Windows 8.1)
+- Firefox 33.0.0 (Windows 8)
+- Safari 8.0.0 (Mac OS X 10.10)
+- Chrome 39.0.2171 (Mac OS X 10.10.0)
+
+
 
 # Framework Usage
 
