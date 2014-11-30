@@ -58,13 +58,14 @@
 
     it('created module should have all the valid properties', function () {
       var moduleName = 'testingModule2';
-      window.Carpet.module(moduleName, function () {});
+      var testingModuleCallback = function () {};
+      window.Carpet.module(moduleName, testingModuleCallback);
 
       expect(typeof window.Carpet.getModule(moduleName)).toBe('object');
 
       expect(typeof window.Carpet.getModule(moduleName).moduleBody).toBeDefined();
       expect(typeof window.Carpet.getModule(moduleName).moduleBody).toBe('function');
-      expect(window.Carpet.getModule(moduleName).moduleBody.toString()).toBe('function () {}');
+      expect(window.Carpet.getModule(moduleName).moduleBody.toString()).toBe(testingModuleCallback.toString());
 
       expect(typeof window.Carpet.getModule(moduleName).name).toBeDefined();
       expect(typeof window.Carpet.getModule(moduleName).name).toBe('string');
