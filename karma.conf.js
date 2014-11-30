@@ -54,8 +54,8 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
 
     files: [
-      'src/carpet.js',
-      'tests/spec/carpet.test.js'
+      'src/**/*.js',
+      'tests/spec/**/*.js'
     ],
 
     reporters: ['dots'],
