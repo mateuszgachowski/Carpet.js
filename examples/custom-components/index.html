@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Creating custom components">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carpet.js - Creating custom components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .mouseBox {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #cac;
+      }
+    </style>
+  </head>
+  <body>
+    
+
+    <div class="mouseBox" data-module="mouseGhost">
+      
+    </div>
+    <!-- Global libraries -->
+    <script src="../../src/carpet.js"></script>
+
+    <!-- Components -->
+    <script src="components/utils.js"></script>
+
+    <!-- Modules -->
+    <script src="modules/mouseGhost.js"></script>
+
+    <!-- Carpet init -->
+    <script>
+      Carpet.init();
+    </script>
+  </body>
+</html>

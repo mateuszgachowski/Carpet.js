@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Passing settings by DOM attribute">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carpet.js - Passing settings by DOM attribute</title>
+  </head>
+  <body>
+
+    <div data-module="competitions" data-settings="{teamName: 'arsenal'}">
+      
+    </div>
+
+    <div data-module="competitions" data-settings="{teamName: 'chelsea'}">
+      
+    </div>
+  
+    <!-- Global libraries -->
+    <script src="../../src/carpet.js"></script>
+
+    <!-- Modules -->
+    <script src="modules/competitions.js"></script>
+
+    <!-- Carpet init -->
+    <script>
+      Carpet.init();
+    </script>
+  </body>
+</html>

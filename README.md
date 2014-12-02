@@ -4,6 +4,23 @@
 
 Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master)](https://travis-ci.org/mateuszgachowski/Carpet.js) Develop: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop)](https://travis-ci.org/mateuszgachowski/Carpet.js)
 
+# Features
+
+- Lightweight: Minified: 2.2K, Minified & Gzipped: < 1K
+- Easy and Module based
+- Easily extendable by components
+
+**Browser Support (tested)**
+
+- IE 9.0.0 (Windows Vista)
+- IE 10.0.0 (Windows 8)
+- IE 11.0.0 (Windows 8.1)
+- Firefox 33.0.0 (Windows 8)
+- Safari 8.0.0 (Mac OS X 10.10)
+- Chrome 39.0.2171 (Mac OS X 10.10.0)
+
+
+
 # Framework Usage
 
 ## Installation
@@ -83,10 +100,10 @@ $(context).find('.my-pro-element').on('click', anotherFunction);
 In module body you can also access its `this` context where you can find some additional data:
 
 ```js
-  this.name       // - (string) containing the name of the module
-  this.moduleBody // - (function) body of the module
-  this.settings   // - (object) settings object
-  this.methods    // - (object) all public methods - same as 'exports'
+this.name       // - (string) containing the name of the module
+this.moduleBody // - (function) body of the module
+this.settings   // - (object) settings object
+this.methods    // - (object) all public methods - same as 'exports'
 ```
 
 ## Logging to console
@@ -127,15 +144,83 @@ Carpet.warn('log me', {}, [], 1, -1, Infinity, function(){} /* any other type he
 
 To clear the output just call `Carpet.clearConsole()`
 
+For more information you can check the [API documentation](http://mateuszgachowski.github.io/Carpet.js/api_docs/index.html)
+
+# Writing your own components
+
+Components are separated logic in Carpet.js. They can be loaded inside the modules. Before first load they stay in the memory - not executed.
+
+*You can use them as helpers or any other kind of separated logic.*
+
+Writing a component is very easy:
+
+```js
+Carpet.registerComponent('componentName', function () {
+
+  Carpet.log(this); // => { name: 'componentName', componentBody: function...}
+
+  return {
+    componentMethod : function () {
+      return 1;
+    },
+
+    componentProperty : [1, 5, 7],
+
+    anythingYouWant : {}
+  };
+});
+```
+
+Component can return any type. Object with methods or a simple function are the preferred pattern.
+
+Component is inactive until the first 'require'. You can get the component in two ways:
+
+```js
+// Globally (from anywhere)
+Carpet.getComponent('componentName'); // => { componentMethod: function...}
+
+// Locally in the module (preferred)
+Carpet.module('myModule', function (exports, settings, context) {
+  var mySweetComponent = this.component('componentName');
+
+  Carpet.log(mySweetComponent);
+  // =>
+  // {
+  //  componentMethod : function () { return 1; },
+  //  componentProperty : [1, 5, 7],
+  //  anythingYouWant : {}
+  // }
+});
+```
+
+Components have to be loaded before modules, so the structure looks like this:
+
+```html
+  <!-- Carpet.js -->
+  <script src="carpet.min.js"></script>
+
+  <!-- Components -->
+  <script src="components/myComponent.js"></script> <!-- HERE -->
+
+  <!-- Modules -->
+  <script src="modules/myModule.js"></script>
+
+  <!-- Application init -->
+  <script>Carpet.init();</script>
+
+```
+
+Carpet.js comes with some components included, but they are not added in the core library by default. You must add them to your html file with a `script` tag.
+
 # Contribution
 
 ## Setup for development
 
 ```
-  npm install
-  grunt dist      # Generates dist files with full testing and linting
-  # or
-  grunt dist-dev  # Generates dist files without checking the code
+npm install
+grunt dist      # Generates dist files with full testing and linting
+# or
+grunt dist-dev  # Generates dist files without checking the code
 ```
 
 ## Generating JSDoc
@@ -148,6 +233,87 @@ grunt docs
 
 ```
 npm test
+```
+
+## Branching model and submitting changes
+
+Carpet.js is using the great [GitHub Flow](https://github.com/mborsuk/hubflow). Please follow installation instruction from their README file.
+
+After you install HubFlow on your machine run this command in the **forked** Carpet.js repository:
+
+```
+git hf init
+```
+
+Now you should be ready to start working on a feature. Feature naming pattern should fit the following:
+
+```
+mg-short-description
+^      ^-- Short description separated by dashes (-)
+^--- Your initials
+
+Examples:
+
+mg-component-pubsub
+ms-bug-21-wrong-casting # bug or others can be followed by GitHub issue number
+```
+
+To start working on a feature you will have to create a feature branch.
+
+```
+git hf feature start mg-component-pubsub
+```
+
+Then you can easily work on your branch, commit and `git hf push` your changes.
+After you finish your functionality and all tests are passing correctly (locally and by Travis CI) you can submit a Pull Request.
+
+If the Pull request has been merged correctly you can just finish the branch by:
+
+```
+git hf feature finish mg-component-pubsub
+```
+
+Thats all, your feature will be released in next version!
+
+## Writing build-in components
+
+Writing Carpet.js components don't differ from normal component registration pattern but requires documentation and full test coverage.
+
+As a sample you can take a look at the advice component and its tests:
+
+```js
+/**
+ * @module advice
+ */
+Carpet.registerComponent('advice', function () {
+  'use strict';
+
+  return {
+    /**
+     * Wrapes function around
+     *
+     * @param  {Function} base    Function to wrap on
+     * @param  {Function} wrapped Wrapping function
+     * @return {Function}         Wrapped function body
+     */
+    around: function (base, wrapped) {
+      return function composedAround() {
+        // unpacking arguments by hand is faster
+        var i = 0;
+        var l = arguments.length;
+        var args = new Array(l + 1);
+
+        args[0] = base.bind(this);
+        for (; i < l; i++) {
+          args[i + 1] = arguments[i];
+        }
+        return wrapped.apply(this, args);
+      };
+    },
+    // etc..
+    // [...]
+  };
+});
 ```
 
 Feel free to contribute or add [issues](https://github.com/mateuszgachowski/Carpet.js/issues) and questions
