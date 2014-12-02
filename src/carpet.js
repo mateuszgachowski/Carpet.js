@@ -208,11 +208,11 @@
          *     anythingYouWant : {}
          *   };
          * });
-         * 
+         *
          *
          * @memberOf Carpet
          * @method registerComponent
-         * 
+         *
          * @param  {String}   componentName  Name of the component
          * @param  {Function} initCallback   Component body
          */
