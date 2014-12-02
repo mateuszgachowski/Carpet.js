@@ -191,6 +191,31 @@
           this.info('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
         },
 
+        /**
+         * Will create a custom component that can be used in 'module' or globally
+         *
+         * @example
+         *
+         * Carpet.registerComponent('componentName', function () {
+         *
+         *   Carpet.log(this); // => { name: 'componentName', componentBody: function...}
+         *
+         *   return {
+         *     componentMethod : function () {
+         *       return 1;
+         *     },
+         *     componentProperty : [1, 5, 7],
+         *     anythingYouWant : {}
+         *   };
+         * });
+         *
+         *
+         * @memberOf Carpet
+         * @method registerComponent
+         *
+         * @param  {String}   componentName  Name of the component
+         * @param  {Function} initCallback   Component body
+         */
         registerComponent : function (componentName, initCallback) {
           if (carpetComponents[componentName]) {
             this.warn('Component: {0} already exists. Name collision'.replace('{0}', componentName));

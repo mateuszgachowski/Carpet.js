@@ -1,6 +1,6 @@
 {
   "name": "carpet",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "authors": [
     "Mateusz Gachowski <mateusz.gachowski@performgroup.com>"
   ],
@@ -9,7 +9,7 @@
     "dist/carpet.min.js"
   ],
   "license": "MIT",
-  "homepage": "http://mgachowski.pl",
+  "homepage": "http://mateuszgachowski.github.io/Carpet.js/",
   "ignore": [
     "**/.*",
     "node_modules",
