@@ -303,10 +303,15 @@
          * @memberOf Carpet
          * @method init
          *
+         * @param {Object} element DOM element to look for modules in (it's document if no argument provided)
          */
-        init : function () {
+        init : function (element) {
 
-          var DOMModules = document.querySelectorAll('[data-module]');
+          if (typeof element == 'undefined') {
+            element = document;
+          }
+
+          var DOMModules = element.querySelectorAll('[data-module]');
 
           for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
             var domModule;
