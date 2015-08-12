@@ -1,4 +1,4 @@
-Carpet.module('navigation', function (exports, settings, context) {
+Carpet.module('navigation', function (exports, settings, context, deps) {
   'use strict';
 
   exports.init = function () {

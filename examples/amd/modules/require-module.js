@@ -1,9 +1,6 @@
-define(['carpet'], function (Carpet) {
+Carpet.module('require-module', ['modules/test'], function (exports, settings, context, deps) {
   'use strict';
-  Carpet.module('require-module', function (exports, settings, context) {
-
-    exports.init = function () {
-      console.log(arguments, settings, context);
-    };
-  });
+  exports.init = function () {
+    console.log(exports, settings, context, deps);
+  };
 });

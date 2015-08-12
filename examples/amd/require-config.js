@@ -1,5 +1,7 @@
 require.config({
-    paths: {
-        carpet: '../../src/carpet'
+    shim: {
+    	carpet: {
+    		exports: 'Carpet'
+    	}
     }
 });
