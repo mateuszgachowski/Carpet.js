@@ -176,7 +176,25 @@
        * @param  {String}   moduleName Name of the module
        * @param  {Function} callback   Actual module body
        */
-      module : function (moduleName, initCallback) {
+      module : function (moduleName) {
+        var deps = [];
+        var initCallback;
+
+
+        if (arguments.length > 2) {
+          if (!window.require) {
+            this.loggingEnabled = true;
+            this.error('You need to use requirejs for dependencies loading');
+            return;
+          }
+
+          deps = arguments[1];
+          initCallback = arguments[2];
+        }
+        else {
+          initCallback = arguments[1];
+        }
+
         if (carpetModules[moduleName]) {
           this.warn('Module: {0} already exists. Name collision'.replace('{0}', moduleName));
           return;
@@ -187,7 +205,8 @@
           name       : moduleName,
           settings   : {},
           methods    : {},
-          component  : this.getComponent
+          component  : this.getComponent,
+          deps       : deps
         };
 
         this.info('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
@@ -312,7 +331,23 @@
         var Carpet = this;
 
 
+        var requireWrap;
+        var moduleInit;
         var moduleIterator;
+
+        // Fake require if not found to have smaller code (avoid ifs)
+        requireWrap = (window.require) ? window.require : function (deps, callback) { callback(); };
+
+        moduleInit = function (currentModule) {
+          var args = Array.prototype.slice.call(arguments, 1);
+
+          currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule, args);
+
+          if (typeof currentModule.methods.init === 'function') {
+            Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
+            currentModule.methods.init();
+          }
+        };
 
         moduleIterator = function (moduleName) {
           currentModule = carpetModules[moduleName];
@@ -320,12 +355,8 @@
           if (currentModule) {
 
             currentModule.settings = moduleSettings;
-            currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
 
-            if (typeof currentModule.methods.init === 'function') {
-              Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
-              currentModule.methods.init();
-            }
+            requireWrap(currentModule.deps, moduleInit.bind(null, currentModule));
           }
           else {
             Carpet.warn('Module: {0} has not been found'.replace('{0}', moduleName));
