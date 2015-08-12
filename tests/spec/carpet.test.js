@@ -95,6 +95,30 @@
       window.Carpet.init();
     });
 
+    it('should fire multiple modules on one context with same inherited settings', function(done) {
+
+      var sampleTestSettings = { sampleKey: 'sampleValue', anotherKey: 1 };
+
+      var element = document.createElement('div');
+      element.setAttribute('data-module', 'domModuleTest1 domModuleTest2 domModuleTest3');
+      element.setAttribute('data-settings', JSON.stringify(sampleTestSettings));
+      document.body.appendChild(element);
+
+      var testModuleBody = function (exports, settings, context) {
+        exports.init = function () {
+          expect(context).toEqual(element);
+          expect(settings).toEqual(sampleTestSettings);
+          done();
+        };
+      };
+
+      window.Carpet.module('domModuleTest1', testModuleBody);
+      window.Carpet.module('domModuleTest2', testModuleBody);
+      window.Carpet.module('domModuleTest3', testModuleBody);
+
+      window.Carpet.init();
+    });
+
     it('should inherit the settings from the DOM module', function (done) {
 
       var sampleSettings = { sampleKey: 'sampleValue', anotherKey: 1 };
@@ -114,6 +138,7 @@
 
       window.Carpet.init();
     });
+
   });
 
   describe('Carpet.js: Component pattern should behave correctly', function () {

@@ -307,35 +307,39 @@
         init : function () {
 
           var DOMModules = document.querySelectorAll('[data-module]');
+          var Carpet = this;
 
           for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
             var domModule;
-            var moduleName;
+            var modules;
             var moduleSettings;
             var currentModule;
 
             domModule = DOMModules[moduleIndex];
-            moduleName = domModule.getAttribute('data-module');
+            modules = domModule.getAttribute('data-module').split(' ');
 
             /*jshint -W054 */
             moduleSettings = new Function ('return ' + domModule.getAttribute('data-settings'))() || {};
             /*jshint +W054 */
 
-            currentModule = carpetModules[moduleName];
+            modules.forEach(function (moduleName) {
+                currentModule = carpetModules[moduleName];
 
-            if (currentModule) {
+                if (currentModule) {
 
-              currentModule.settings = moduleSettings;
-              currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
+                  currentModule.settings = moduleSettings;
+                  currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
 
-              if (typeof currentModule.methods.init === 'function') {
-                this.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
-                currentModule.methods.init();
-              }
-            }
-            else {
-              this.warn('Module: {0} has not been found'.replace('{0}', moduleName));
-            }
+                  if (typeof currentModule.methods.init === 'function') {
+                    Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
+                    currentModule.methods.init();
+                  }
+                }
+                else {
+                  Carpet.warn('Module: {0} has not been found'.replace('{0}', moduleName));
+                }
+            });
+
           }
         }
       };
