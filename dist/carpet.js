@@ -1,5 +1,5 @@
 /*!
- * Carpet.js v3.0.1 (http://mateuszgachowski.github.io/Carpet.js/)
+ * Carpet.js v3.1.0 (http://mateuszgachowski.github.io/Carpet.js/)
  * Copyright 2014-2015 Mateusz Gachowski <mateusz.gachowski@gmail.com>
  * Licensed under MIT (https://github.com/mateuszgachowski/Carpet.js/blob/master/LICENSE)
  */
@@ -314,20 +314,12 @@
       init : function () {
 
         var DOMModules = document.querySelectorAll('[data-module]');
+        var Carpet = this;
 
-        for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
-          var domModule;
-          var moduleName;
-          var moduleSettings;
-          var currentModule;
 
-          domModule = DOMModules[moduleIndex];
-          moduleName = domModule.getAttribute('data-module');
+        var moduleIterator;
 
-          /*jshint -W054 */
-          moduleSettings = new Function ('return ' + domModule.getAttribute('data-settings'))() || {};
-          /*jshint +W054 */
-
+        moduleIterator = function (moduleName) {
           currentModule = carpetModules[moduleName];
 
           if (currentModule) {
@@ -336,13 +328,30 @@
             currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
 
             if (typeof currentModule.methods.init === 'function') {
-              this.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
+              Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
               currentModule.methods.init();
             }
           }
           else {
-            this.warn('Module: {0} has not been found'.replace('{0}', moduleName));
+            Carpet.warn('Module: {0} has not been found'.replace('{0}', moduleName));
           }
+        };
+
+        for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
+          var domModule;
+          var modules;
+          var moduleSettings;
+          var currentModule;
+
+          domModule = DOMModules[moduleIndex];
+          modules = domModule.getAttribute('data-module').split(' ');
+
+          /*jshint -W054 */
+          moduleSettings = new Function ('return ' + domModule.getAttribute('data-settings'))() || {};
+          /*jshint +W054 */
+
+          modules.forEach(moduleIterator);
+
         }
       }
     };
