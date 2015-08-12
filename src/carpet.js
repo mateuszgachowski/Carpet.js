@@ -3,7 +3,8 @@
 
   if (typeof define === 'function' && define.amd) {
     define(factory);
-  } else {
+  }
+  else {
     root.Carpet = factory();
   }
 }(this, function () {
@@ -339,7 +340,7 @@
         requireWrap = (window.require) ? window.require : function (deps, callback) { callback(); };
 
         moduleInit = function (currentModule) {
-          var args = Array.prototype.slice.call(arguments, 1);
+          var args = arraySlice.call(arguments, 1);
 
           currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule, args);
 
