@@ -309,6 +309,27 @@
           var DOMModules = document.querySelectorAll('[data-module]');
           var Carpet = this;
 
+
+          var moduleIterator;
+
+          moduleIterator = function (moduleName) {
+            currentModule = carpetModules[moduleName];
+
+            if (currentModule) {
+
+              currentModule.settings = moduleSettings;
+              currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
+
+              if (typeof currentModule.methods.init === 'function') {
+                Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
+                currentModule.methods.init();
+              }
+            }
+            else {
+              Carpet.warn('Module: {0} has not been found'.replace('{0}', moduleName));
+            }
+          };
+
           for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
             var domModule;
             var modules;
@@ -322,23 +343,7 @@
             moduleSettings = new Function ('return ' + domModule.getAttribute('data-settings'))() || {};
             /*jshint +W054 */
 
-            modules.forEach(function (moduleName) {
-                currentModule = carpetModules[moduleName];
-
-                if (currentModule) {
-
-                  currentModule.settings = moduleSettings;
-                  currentModule.moduleBody.call(currentModule, currentModule.methods, currentModule.settings, domModule);
-
-                  if (typeof currentModule.methods.init === 'function') {
-                    Carpet.info('Module: {0} has been autoinited'.replace('{0}', currentModule.name));
-                    currentModule.methods.init();
-                  }
-                }
-                else {
-                  Carpet.warn('Module: {0} has not been found'.replace('{0}', moduleName));
-                }
-            });
+            modules.forEach(moduleIterator);
 
           }
         }

@@ -95,7 +95,7 @@
       window.Carpet.init();
     });
 
-    it('should fire multiple modules on one context with same inherited settings', function(done) {
+    it('should fire multiple modules on one context with same inherited settings', function (done) {
 
       var sampleTestSettings = { sampleKey: 'sampleValue', anotherKey: 1 };
 
