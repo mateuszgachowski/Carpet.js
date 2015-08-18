@@ -307,7 +307,7 @@
          */
         init : function (element) {
 
-          if (typeof element === 'undefined') {
+          if (typeof element == 'undefined') {
             element = document;
           }
 
