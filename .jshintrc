@@ -2,7 +2,8 @@
   "globals": {
     "window": false,
     "document": false,
-    "Carpet": false
+    "Carpet": false,
+    "define": false
   },
   "camelcase": true,
   "curly": true, 
