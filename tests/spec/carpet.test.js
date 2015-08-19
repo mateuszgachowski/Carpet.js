@@ -139,6 +139,29 @@
       window.Carpet.init();
     });
 
+    it('should look for modules inside of specifiec DOM element only if passed to init()', function (done) {
+      var parentElement = document.createElement('div');
+      var element1 = document.createElement('div');
+      var element2 = document.createElement('div');
+
+      element1.setAttribute('data-module', 'domModuleElement1');
+      element2.setAttribute('data-module', 'domModuleElement2');
+
+      parentElement.appendChild(element1);
+      parentElement.appendChild(element2);
+      document.body.appendChild(parentElement);
+
+      window.Carpet.module('domModuleElement1', function (exports, settings, context) {
+        expect(context).toEqual(element1);
+        done();
+      });
+
+      expect(typeof window.Carpet.getModule('domModuleElement2')).toBe('undefined');
+
+      window.Carpet.init(element1);
+    });
+
+
   });
 
   describe('Carpet.js: Component pattern should behave correctly', function () {
