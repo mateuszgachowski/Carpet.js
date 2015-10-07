@@ -9,7 +9,7 @@ module.exports = function (config) {
       browserName: 'chrome',
       platform: 'OS X 10.11',
       version: '45.0'
-    },
+    }
     // sl_chrome_windows: {
     //   base: 'SauceLabs',
     //   browserName: 'chrome',
