@@ -64,6 +64,7 @@ module.exports = function (config) {
 
     sauceLabs: {
         testName: 'Carpet.js jasmine tests',
+        build: process.env.TRAVIS_BUILD_NUMBER,
         connectOptions: {
           build: process.env.TRAVIS_BUILD_NUMBER,
           tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
