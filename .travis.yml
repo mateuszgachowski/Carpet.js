@@ -4,7 +4,8 @@ node_js:
 install: npm install
 env:
   global:
-  - secure: OulwNX1O8gK0ClTjTu1kQa8p2YVp2ho03l5WUBqkCL5eKHxF3yzvUMBdqLJaLsb1esyovx56VjTYA0sZYJGQGUfVoCV03DivVCzNXSKDPdmGsB8ex4EfM4gKecrboO5u8z0kXK2C6LiaDPUMcZxTQFJwpaL9tWUTaO4i79BNrYA=
-  - secure: A9qkOqifUSit6GtAKbeBFphf0hsejVnHh5rEx28tvKDmREWA1201M4V4EfWn60udrZIjYQ2ylqt0m3xW3A3Z1q7v9WEx5JjYl9zBGljF6yrKQ4if7eD6etKUApvOF88mwc4j6cGtYGYPHQfLZ6CV8mCLXu/Omf0GPXNqhs8pPJE=
+    - secure: N4FdUtCUH85jxD+OevpBSGdEQNo1D5qTqlqKoTJPXYVYmFX1eTrO+H0dhQ7+G2K5NmIKYxagN0+lysyHt+w6L6eJMP9D6lWyXnwnqFUiiyrO5oEkZGDUE01VlOp7qR73Yy8EGfkdZPI2ZYq3Wkhl381eYIcoD6BWVAwlN5AgFyk=
+    - secure: YhpcTcFUP/VtYJWjv+HTcupOuWBls1idjORRyr++HaTWFwjDbHZklgdWxBRkIvmK19lr8m8eIpWK1dKwY6y1grhqfkvktSw7wcPQAhqFHvNfoNuErXZO/Edm01M6CCWEhq+cECxwp+jf/5HT3jgCbn3594Gp6aeQ/vqZ7dktUNo=
 addons:
   sauce_connect: true
+sudo: false
