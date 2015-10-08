@@ -12,12 +12,14 @@ Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?br
 
 **Browser Support (tested)**
 
-- IE 9.0.0 (Windows Vista)
-- IE 10.0.0 (Windows 8)
-- IE 11.0.0 (Windows 8.1)
-- Firefox 33.0.0 (Windows 8)
-- Safari 8.0.0 (Mac OS X 10.10)
-- Chrome 39.0.2171 (Mac OS X 10.10.0)
+- IE 9.0 (Windows 7)
+- IE 10.0 (Windows 7)
+- IE 11.0 (Windows 7)
+- Firefox 41.0 (Windows 8)
+- Firefox 41.0 (Mac OS X 10.11)
+- Safari 8.1 (Mac OS X 10.11)
+- Chrome 45.0 (Windows 7)
+- Chrome 45.0 (Mac OS X 10.10.0)
 
 
 
@@ -237,12 +239,12 @@ npm test
 
 ## Branching model and submitting changes
 
-Carpet.js is using the great [GitHub Flow](https://github.com/mborsuk/hubflow). Please follow installation instruction from their README file.
+Carpet.js is using the great [Git Flow](https://github.com/nvie/gitflow). Please follow installation instruction for your distribution [clicking here](https://github.com/nvie/gitflow/wiki/Installation).
 
-After you install HubFlow on your machine run this command in the **forked** Carpet.js repository:
+After you install GitFlow on your machine run this command in the **forked** Carpet.js repository:
 
 ```
-git hf init
+git flow init
 ```
 
 Now you should be ready to start working on a feature. Feature naming pattern should fit the following:
@@ -261,16 +263,16 @@ ms-bug-21-wrong-casting # bug or others can be followed by GitHub issue number
 To start working on a feature you will have to create a feature branch.
 
 ```
-git hf feature start mg-component-pubsub
+git flow feature start mg-component-pubsub
 ```
 
-Then you can easily work on your branch, commit and `git hf push` your changes.
+Then you can easily work on your branch, commit and `git push` your changes.
 After you finish your functionality and all tests are passing correctly (locally and by Travis CI) you can submit a Pull Request.
 
 If the Pull request has been merged correctly you can just finish the branch by:
 
 ```
-git hf feature finish mg-component-pubsub
+git flow feature finish mg-component-pubsub
 ```
 
 Thats all, your feature will be released in next version!

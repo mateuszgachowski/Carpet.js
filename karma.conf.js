@@ -2,53 +2,69 @@ module.exports = function (config) {
 
   var customLaunchers = {
 
-    // BrowserStack
-    'BS_Chrome': {
-      base: 'BrowserStack',
-      browser: 'chrome',
-      os: 'OS X',
-      os_version: 'Yosemite'
+
+  	// Chrome
+    sl_chrome_mac: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'OS X 10.11',
+      version: '45.0'
     },
-    'BS_Safari': {
-      base: 'BrowserStack',
-      browser: 'safari',
-      os: 'OS X',
-      os_version: 'Yosemite'
+    sl_chrome_windows: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7',
+      version: '45.0'
     },
-    'BS_Firefox': {
-      base: 'BrowserStack',
-      browser: 'firefox',
-      os: 'Windows',
-      os_version: '8'
+
+    // Firefox
+    sl_firefox_windows: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      platform: 'Windows 8',
+      version: '41.0'
     },
-    'BS_IE_9': {
-      base: 'BrowserStack',
-      browser: 'ie',
-      browser_version: '9.0',
-      os: 'Windows',
-      os_version: '7'
+    sl_firefox_mac: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      platform: 'OS X 10.11',
+      version: '41.0'
     },
-    'BS_IE_10': {
-      base: 'BrowserStack',
-      browser: 'ie',
-      browser_version: '10.0',
-      os: 'Windows',
-      os_version: '8'
+
+    // Safari
+    sl_safari_mac: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.11',
+      version: '8.1'
     },
-    'BS_IE_11': {
-      base: 'BrowserStack',
-      browser: 'ie',
-      browser_version: '11.0',
-      os: 'Windows',
-      os_version: '8.1'
+
+    // IE
+    sl_ie_9_windows: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '9.0'
+    },
+    sl_ie_10_windows: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '10.0'
+    },
+    sl_ie_11_windows: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '11.0'
     }
   };
 
   config.set({
 
-    browserStack: {
-      username: process.env.BROWSER_STACK_USERNAME,
-      accessKey: process.env.BROWSER_STACK_ACCESS_KEY
+    sauceLabs: {
+        testName: 'Carpet.js jasmine tests',
+        startConnect: true
     },
 
     frameworks: ['jasmine'],
@@ -58,7 +74,7 @@ module.exports = function (config) {
       'tests/spec/**/*.js'
     ],
 
-    reporters: ['dots'],
+    reporters: ['dots', 'saucelabs'],
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
@@ -67,4 +83,13 @@ module.exports = function (config) {
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers)
   });
+
+  if (process.env.TRAVIS)
+    {
+        label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
+
+        config.sauceLabs.build = label;
+        config.sauceLabs.startConnect = false;
+        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    }
 };
