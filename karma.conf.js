@@ -64,10 +64,10 @@ module.exports = function (config) {
 
     sauceLabs: {
         testName: 'Carpet.js jasmine tests',
-        username: process.env.SAUCE_USERNAME,
-        accessKey: process.env.SAUCE_ACCESS_KEY,
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-        build: process.env.TRAVIS_BUILD_NUMBER
+        connectOptions: {
+          build: process.env.TRAVIS_BUILD_NUMBER,
+          tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+        }
     },
 
     frameworks: ['jasmine'],
