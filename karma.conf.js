@@ -64,12 +64,7 @@ module.exports = function (config) {
 
     sauceLabs: {
         testName: 'Carpet.js jasmine tests',
-        connectOptions: {
-          username: process.env.SAUCE_USERNAME,
-          accessKey: process.env.SAUCE_ACCESS_KEY,
-          build: process.env.TRAVIS_BUILD_NUMBER,
-          tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
-        }
+        startConnect: true
     },
 
     frameworks: ['jasmine'],
@@ -88,4 +83,20 @@ module.exports = function (config) {
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers)
   });
+
+  if (process.env.TRAVIS)
+    {
+        label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
+
+        config.captureTimeout = 0;
+        config.logLevel = config.LOG_DEBUG;
+        config.transports = [
+            "websocket"
+        ];
+
+        config.sauceLabs.build = label;
+        config.sauceLabs.startConnect = false;
+        config.sauceLabs.recordScreenshots = true;
+        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    }
 };
