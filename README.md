@@ -10,6 +10,13 @@ Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?br
 - Easy and Module based
 - Easily extendable by components
 
+** Used on big-scale projects as:
+
+- Copa America Offical Site (http://www.ca2015.com/)
+- ePlayer (http://eplayer.performgroup.com/)
+- ProTipster (https://www.protipster.com/)
+and many more...
+
 **Browser Support (tested)**
 
 - IE 9.0 (Windows 7)
