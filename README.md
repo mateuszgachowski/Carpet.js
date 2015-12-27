@@ -10,7 +10,7 @@ Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?br
 - Easy and Module based
 - Easily extendable by components
 
-**Used on big-scale projects as:
+**Used on big-scale projects as:**
 
 - Copa America Offical Site (http://www.ca2015.com/)
 - ePlayer (http://eplayer.performgroup.com/)
