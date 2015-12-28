@@ -36,7 +36,7 @@ module.exports = function (config) {
       base: 'SauceLabs',
       browserName: 'safari',
       platform: 'OS X 10.11',
-      version: '8.1'
+      version: '9.0'
     },
 
     // IE
