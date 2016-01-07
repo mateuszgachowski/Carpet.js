@@ -9,16 +9,30 @@
 }(this, function () {
   'use strict';
 
+  var extend;
   var Carpet;
+
+
+  extend = function extend(a, b){
+    for(var key in b) {
+      if(b.hasOwnProperty(key)) {
+        a[key] = b[key];
+      }
+    }
+    return a;
+  };
 
   Carpet = function Carpet() {
     var carpetModules;
     var carpetComponents;
     var arraySlice;
+    var ext;
 
     carpetModules = {};
     carpetComponents = {};
     arraySlice = Array.prototype.slice;
+
+    ext = {};
 
 
     return {
@@ -182,13 +196,13 @@
           return;
         }
 
-        carpetModules[moduleName] = {
+        carpetModules[moduleName] = extend({
           moduleBody : initCallback,
           name       : moduleName,
           settings   : {},
           methods    : {},
           component  : this.getComponent
-        };
+        }, ext);
 
         this.info('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
       },
@@ -348,6 +362,12 @@
           modules.forEach(moduleIterator);
 
         }
+      },
+
+      extend : function (initCallback) {
+        var callbackOutput = initCallback.call(ext, this);
+        extend(this, callbackOutput);
+        extend(ext, callbackOutput);
       }
     };
 

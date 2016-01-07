@@ -1,3 +1,13 @@
+Carpet.extend(function (core) {
+  debugger;
+
+  return {
+    log: function () {
+      console.log('extended');
+    }
+  }
+});
+
 Carpet.module('navigation', function (exports, settings, context) {
   'use strict';
 
