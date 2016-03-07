@@ -313,7 +313,7 @@
           element = document;
         }
 
-        var DOMModules = document.querySelectorAll('[data-module]');
+        var DOMModules = element.querySelectorAll('[data-module]');
         var Carpet = this;
 
 
