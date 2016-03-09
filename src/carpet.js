@@ -31,7 +31,7 @@
        */
       this.log = function (/* arg1, arg2, ..., argn */) {
         this.debug.apply(this, ['log'].concat(arraySlice.call(arguments)));
-      };
+      }.bind(this);
 
       /**
        * Will warn something in console only if Carpet.loggingEnabled is true
@@ -48,7 +48,7 @@
        */
       this.warn = function (/* arg1, arg2, ..., argn */) {
         this.debug.apply(this, ['warn'].concat(arraySlice.call(arguments)));
-      };
+      }.bind(this);
 
       /**
        * Will log something in console only if Carpet.loggingEnabled is true
@@ -65,7 +65,7 @@
        */
       this.error = function (/* arg1, arg2, ..., argn */) {
         this.debug.apply(this, ['error'].concat(arraySlice.call(arguments)));
-      };
+      }.bind(this);
 
       /**
        * Will log something in console only if Carpet.loggingEnabled is true
