@@ -1,7 +1,7 @@
 /*!
- * Carpet.js v3.1.0 (http://mateuszgachowski.github.io/Carpet.js/)
- * Copyright 2014-2015 Mateusz Gachowski <mateusz.gachowski@gmail.com>
- * Licensed under MIT (https://github.com/mateuszgachowski/Carpet.js/blob/master/LICENSE)
+ * Carpet.js v3.1.1 (http://mateuszgachowski.github.io/Carpet.js/)
+ * Copyright 2014-2016 Mateusz Gachowski <mateusz.gachowski@gmail.com>
+ * Licensed under  ()
  */
 (function (root, factory) {
   'use strict';
@@ -310,10 +310,15 @@
        * @memberOf Carpet
        * @method init
        *
+       * @param {Object} element DOM element to look for modules in (it's document if no argument provided)
        */
-      init : function () {
+      init : function (element) {
 
-        var DOMModules = document.querySelectorAll('[data-module]');
+        if (typeof element === 'undefined') {
+          element = document;
+        }
+
+        var DOMModules = element.querySelectorAll('[data-module]');
         var Carpet = this;
 
 
