@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     banner: '/*!\n' +
             ' * Carpet.js v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
             ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+            ' * Licensed under <%= pkg.license %>\n' +
             ' */\n',
 
     clean: {
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      
+
       carpet: {
         options: {
           jshintrc: '.jshintrc'
@@ -90,7 +90,8 @@ module.exports = function (grunt) {
 
     uglify: {
       options: {
-        preserveComments: 'some'
+        preserveComments: false,
+        banner: '<%= banner %>'
       },
       carpet: {
         src: '<%= concat.carpet.dest %>',
@@ -113,7 +114,8 @@ module.exports = function (grunt) {
    * Register available tasks
    */
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('dist', ['clean:dist', 'jshint', 'jscs', 'jasmine', 'concat', 'uglify']);
+  grunt.registerTask('dist', ['clean:dist', 'jshint', 'jscs', 'concat', 'uglify']);
+  grunt.registerTask('test', ['jasmine']);
   grunt.registerTask('dist-dev', ['clean:dist', 'concat', 'uglify']);
   grunt.registerTask('docs', ['clean:docs', 'jsdoc']);
 };
