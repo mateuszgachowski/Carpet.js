@@ -1,5 +1,5 @@
 /*!
- * Carpet.js v3.1.2 (http://mateuszgachowski.github.io/Carpet.js/)
+ * Carpet.js v3.1.3 (http://mateuszgachowski.github.io/Carpet.js/)
  * Copyright 2014-2017 Mateusz Gachowski <mateusz.gachowski@gmail.com>
  * Licensed under MIT
  */
@@ -318,6 +318,9 @@
 
 
         var moduleIterator;
+        var domModule;
+        var moduleSettings;
+        var currentModule;
 
         moduleIterator = function (moduleName) {
           currentModule = carpetModules[moduleName];
@@ -338,10 +341,7 @@
         };
 
         for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
-          var domModule;
           var modules;
-          var moduleSettings;
-          var currentModule;
 
           domModule = DOMModules[moduleIndex];
           modules = domModule.getAttribute('data-module').split(' ');
