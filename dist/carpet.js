@@ -318,6 +318,9 @@
 
 
         var moduleIterator;
+        var domModule;
+        var moduleSettings;
+        var currentModule;
 
         moduleIterator = function (moduleName) {
           currentModule = carpetModules[moduleName];
@@ -338,10 +341,7 @@
         };
 
         for (var moduleIndex = 0; moduleIndex < DOMModules.length; moduleIndex++) {
-          var domModule;
           var modules;
-          var moduleSettings;
-          var currentModule;
 
           domModule = DOMModules[moduleIndex];
           modules = domModule.getAttribute('data-module').split(' ');
