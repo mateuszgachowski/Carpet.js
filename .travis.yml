@@ -2,8 +2,8 @@ language: node_js
 node_js:
 - '7.0'
 install: npm install
-addons:
-  sauce_connect:
-    username: "mateuszgachowski"
-    access_key: "9be10eb4-94c2-4c0d-afe9-9434496fe24e"
+# addons:
+#   sauce_connect:
+#     username: "mateuszgachowski"
+#     access_key: "9be10eb4-94c2-4c0d-afe9-9434496fe24e"
 sudo: false
