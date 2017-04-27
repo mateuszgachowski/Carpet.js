@@ -311,7 +311,7 @@
       init : function (element) {
 
         if (typeof element === 'undefined') {
-            element = document;
+          element = document;
         }
 
         var DOMModules = element.querySelectorAll('[data-module]');
