@@ -12,6 +12,7 @@
   var Carpet;
 
   Carpet = function Carpet() {
+    var prototype;
     var carpetModules;
     var carpetComponents;
     var arraySlice;
@@ -21,7 +22,7 @@
     arraySlice = Array.prototype.slice;
 
 
-    return {
+    prototype = {
       /**
        * Defines console output on or off
        *
@@ -357,6 +358,14 @@
       }
     };
 
+    // Bind All Methods with Carpet context
+    Object.keys(prototype).forEach(function (method) {
+      if (typeof prototype[method] === 'function') {
+        prototype[method] = prototype[method].bind(prototype);
+      }
+    });
+
+    return prototype;
   };
 
   return new Carpet();
