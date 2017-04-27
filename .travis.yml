@@ -2,6 +2,10 @@ language: node_js
 node_js:
 - '4.1'
 install: npm install
+env:
+  global:
+    - secure: N4FdUtCUH85jxD+OevpBSGdEQNo1D5qTqlqKoTJPXYVYmFX1eTrO+H0dhQ7+G2K5NmIKYxagN0+lysyHt+w6L6eJMP9D6lWyXnwnqFUiiyrO5oEkZGDUE01VlOp7qR73Yy8EGfkdZPI2ZYq3Wkhl381eYIcoD6BWVAwlN5AgFyk=
+    - secure: YhpcTcFUP/VtYJWjv+HTcupOuWBls1idjORRyr++HaTWFwjDbHZklgdWxBRkIvmK19lr8m8eIpWK1dKwY6y1grhqfkvktSw7wcPQAhqFHvNfoNuErXZO/Edm01M6CCWEhq+cECxwp+jf/5HT3jgCbn3594Gp6aeQ/vqZ7dktUNo=
 addons:
   sauce_connect:
     username: "mateuszgachowski"
