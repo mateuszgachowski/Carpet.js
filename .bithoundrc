@@ -1,5 +1,8 @@
 {
   "ignore": [
-    "tests/jasmine/**",
+    "tests/jasmine/**"
+  ],
+  "test": [
+    "tests/spec/**"
   ]
 }
