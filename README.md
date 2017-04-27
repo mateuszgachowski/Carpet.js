@@ -1,5 +1,7 @@
 # ![Carpet.js Icon](http://mgachowski.pl/carpetjs.svg) Carpet.js
 
+[![Join the chat at https://gitter.im/mateuszgachowski/Carpet.js](https://badges.gitter.im/mateuszgachowski/Carpet.js.svg)](https://gitter.im/mateuszgachowski/Carpet.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <small>project icon: Rug by Factorio.us collective from The Noun Project</small>
 
 Master: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=master)](https://travis-ci.org/mateuszgachowski/Carpet.js) Develop: [![Build Status](https://travis-ci.org/mateuszgachowski/Carpet.js.svg?branch=develop)](https://travis-ci.org/mateuszgachowski/Carpet.js)
