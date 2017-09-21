@@ -187,7 +187,7 @@
           name       : moduleName,
           settings   : {},
           methods    : {},
-          component  : this.getComponent
+          component  : this.getComponent.bind(this)
         };
 
         this.info('Module: {0} has been loaded to memory'.replace('{0}', moduleName));
