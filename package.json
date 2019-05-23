@@ -19,7 +19,7 @@
     "karma-browserstack-launcher": "^1.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-sauce-launcher": "^1.1.0",
-    "load-grunt-tasks": "^3.5.2"
+    "load-grunt-tasks": "^5.0.0"
   },
   "main": "dist/carpet.min.js",
   "directories": {
