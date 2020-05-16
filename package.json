@@ -15,7 +15,7 @@
     "grunt-jscs": "^3.0.1",
     "grunt-jsdoc": "^2.1.0",
     "jasmine-core": "^2.6.1",
-    "karma": "^1.6.0",
+    "karma": "^5.0.6",
     "karma-browserstack-launcher": "^1.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-sauce-launcher": "^1.1.0",
